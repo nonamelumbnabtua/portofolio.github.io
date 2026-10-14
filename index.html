@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="green">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fe.skopagraphi</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="Style.css">
+</head>
+<body>
+    <div class="progress-container">
+        <div class="progress-bar" id="progress-bar"></div>
+    </div>
+
+    <nav class="glass-nav">
+        <a href="index.html">Fe.Skopagraphi</a>
+
+        <ul class="nav-links" id="nav-links">
+            <li><a href="#" class="active">Home</a></li>
+            <li><a href="#">Feature</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+            <li class="nav-login"><a href="#">Login</a></li>
+        </ul>
+
+        <a href="#" class="btn-login">Login</a>
+
+        <button class="menu-toggle" id="menu-toggle" aria-label="Buka menu" aria-expanded="false" aria-controls="nav-links">
+            <i class="ri-menu-line"></i>
+        </button>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <div class="hero-text">
+                <span class="hero-badge">Portofolio Fotografi</span>
+                <h1>Menangkap <span>Momen</span> Lewat Lensa</h1>
+                <p>Kumpulan karya fotografi saya: potret, jalanan, dan momen sehari-hari yang diabadikan satu klik pada satu waktu.</p>
+                <div class="hero-actions">
+                    <a href="#" class="btn btn-ghost">Lihat Galeri <i class="ri-image-line"></i></a>
+                    <a href="#" class="btn btn-solid">Hubungi Saya <i class="ri-arrow-right-line"></i></a>
+                </div>
+            </div>
+
+            <div class="hero-visual" aria-hidden="true">
+                <span class="float-word word-a">Portrait</span>
+                <span class="float-word word-b">Candid</span>
+
+                <svg class="scene" viewBox="0 0 520 420" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <radialGradient id="flashG">
+                            <stop offset="0" stop-color="#fff"/>
+                            <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+                        </radialGradient>
+                        <linearGradient id="floorG" x1="0" x2="1" y1="0" y2="0">
+                            <stop offset="0" style="stop-color:var(--accent);stop-opacity:0"/>
+                            <stop offset="0.5" style="stop-color:var(--accent);stop-opacity:0.55"/>
+                            <stop offset="1" style="stop-color:var(--accent);stop-opacity:0"/>
+                        </linearGradient>
+                        <linearGradient id="photoG" x1="0" y1="0" x2="1" y2="1">
+                            <stop offset="0" style="stop-color:var(--accent);stop-opacity:0.95"/>
+                            <stop offset="1" stop-color="#1b1b24"/>
+                        </linearGradient>
+                    </defs>
+
+                    <!-- Lantai -->
+                    <rect x="10" y="364" width="500" height="3" fill="url(#floorG)"/>
+                    <ellipse cx="80"  cy="367" rx="34" ry="6" fill="#000" opacity="0.35"/>
+                    <ellipse cx="230" cy="367" rx="34" ry="6" fill="#000" opacity="0.35"/>
+                    <ellipse cx="320" cy="367" rx="34" ry="6" fill="#000" opacity="0.35"/>
+                    <ellipse cx="430" cy="367" rx="34" ry="6" fill="#000" opacity="0.35"/>
+
+                    <!-- Foto polaroid melayang -->
+                    <g transform="translate(300 62) rotate(-8)">
+                        <g class="drift">
+                            <rect x="-34" y="-40" width="68" height="84" rx="4" fill="#f4f4f8"/>
+                            <rect x="-28" y="-34" width="56" height="56" fill="url(#photoG)"/>
+                            <path d="M-28 22 L-10 -4 L2 10 L14 -8 L28 22 Z" fill="#000" opacity="0.35"/>
+                            <circle cx="14" cy="-18" r="6" fill="#fff" opacity="0.85"/>
+                        </g>
+                    </g>
+                    <g transform="translate(420 90) rotate(7) scale(0.85)">
+                        <g class="drift d2">
+                            <rect x="-34" y="-40" width="68" height="84" rx="4" fill="#f4f4f8"/>
+                            <rect x="-28" y="-34" width="56" height="56" fill="url(#photoG)"/>
+                            <path d="M-28 22 L-14 2 L-2 14 L12 -10 L28 22 Z" fill="#000" opacity="0.35"/>
+                            <circle cx="-14" cy="-16" r="6" fill="#fff" opacity="0.85"/>
+                        </g>
+                    </g>
+
+                    <!-- Bingkai viewfinder -->
+                    <g fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="stroke:var(--accent)">
+                        <path d="M185 150 V120 H215"/>
+                        <path d="M465 120 H495 V150"/>
+                        <path d="M185 350 V380 H215"/>
+                        <path d="M465 380 H495 V350"/>
+                    </g>
+                    <rect class="frame-flash" x="185" y="120" width="310" height="260" rx="6"/>
+                    <g transform="translate(320 183)">
+                        <g class="focus">
+                            <rect x="-28" y="-28" width="56" height="56" rx="5" fill="none" stroke-width="2" style="stroke:var(--accent)"/>
+                        </g>
+                    </g>
+
+                    <!-- Fotografer -->
+                    <g transform="translate(80 365)">
+                        <g class="bob">
+                            <path d="M-8 -95 L-10 -4" stroke="#1d1d27" stroke-width="15" stroke-linecap="round"/>
+                            <path d="M10 -95 L12 -4" stroke="#1d1d27" stroke-width="15" stroke-linecap="round"/>
+                            <ellipse cx="-8" cy="-2" rx="12" ry="5" fill="#0c0c10"/>
+                            <ellipse cx="16" cy="-2" rx="12" ry="5" fill="#0c0c10"/>
+                            <rect x="-22" y="-160" width="44" height="72" rx="14" style="fill:var(--accent)"/>
+                            <rect x="-5" y="-172" width="10" height="14" fill="#d9a07f"/>
+                            <path d="M-10 -150 L8 -126 L22 -170" fill="none" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" opacity="0.7" style="stroke:var(--accent)"/>
+                            <circle cx="0" cy="-182" r="20" fill="#e3b08e"/>
+                            <path d="M-21 -184 Q-22 -206 0 -205 Q22 -206 21 -184 Q10 -196 -2 -194 Q-12 -192 -21 -184 Z" fill="#17171c"/>
+                            <!-- kamera -->
+                            <rect x="8" y="-196" width="42" height="26" rx="5" fill="#121218" stroke="rgba(255,255,255,0.35)"/>
+                            <rect x="20" y="-203" width="14" height="8" rx="2" fill="#121218" stroke="rgba(255,255,255,0.35)"/>
+                            <circle cx="56" cy="-183" r="12" fill="#1d1d27" stroke="rgba(255,255,255,0.4)"/>
+                            <circle cx="56" cy="-183" r="7" fill="#07070a"/>
+                            <circle cx="53" cy="-186" r="2" fill="#fff"/>
+                            <path d="M12 -150 L34 -128 L30 -170" fill="none" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" style="stroke:var(--accent)"/>
+                            <circle cx="30" cy="-172" r="6" fill="#e3b08e"/>
+                            <!-- kilatan flash -->
+                            <g transform="translate(66 -183)">
+                                <g class="flash">
+                                    <circle r="28" fill="url(#flashG)"/>
+                                    <path d="M0 -36 L4 -6 L36 0 L4 6 L0 36 L-4 6 L-36 0 L-4 -6 Z" fill="#fff"/>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+
+                    <!-- Model 1: tangan di pinggang -->
+                    <g transform="translate(230 365)">
+                        <g class="sway">
+                            <path d="M-22 -184 Q-27 -140 -14 -138 L14 -138 Q27 -140 22 -184 Z" fill="#4a2b1d"/>
+                            <path d="M-8 -95 L-10 -4" stroke="#23232d" stroke-width="15" stroke-linecap="round"/>
+                            <path d="M10 -95 L12 -4" stroke="#23232d" stroke-width="15" stroke-linecap="round"/>
+                            <ellipse cx="-10" cy="-2" rx="11" ry="5" fill="#0c0c10"/>
+                            <ellipse cx="14" cy="-2" rx="11" ry="5" fill="#0c0c10"/>
+                            <rect x="-22" y="-160" width="44" height="72" rx="14" fill="#dcdce6"/>
+                            <rect x="-5" y="-172" width="10" height="14" fill="#c98f6c"/>
+                            <path d="M-22 -150 L-44 -122 L-22 -104" fill="none" stroke="#dcdce6" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M22 -150 L28 -118 L26 -90" fill="none" stroke="#dcdce6" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+                            <circle cx="-22" cy="-103" r="6" fill="#c98f6c"/>
+                            <circle cx="26" cy="-86" r="6" fill="#c98f6c"/>
+                            <circle cx="0" cy="-182" r="20" fill="#c98f6c"/>
+                            <path d="M-21 -184 Q-22 -207 0 -206 Q22 -207 21 -184 Q8 -197 -4 -194 Q-14 -192 -21 -184 Z" fill="#4a2b1d"/>
+                            <circle cx="-7" cy="-181" r="2" fill="#17171c"/>
+                            <circle cx="7" cy="-181" r="2" fill="#17171c"/>
+                            <path d="M-6 -172 Q0 -167 6 -172" fill="none" stroke="#17171c" stroke-width="2" stroke-linecap="round"/>
+                        </g>
+                    </g>
+
+                    <!-- Model 2: pose peace -->
+                    <g transform="translate(320 365)">
+                        <g class="sway" style="animation-delay:-1.2s">
+                            <path d="M-8 -95 L-10 -4" stroke="#2a2a35" stroke-width="15" stroke-linecap="round"/>
+                            <path d="M10 -95 L12 -4" stroke="#2a2a35" stroke-width="15" stroke-linecap="round"/>
+                            <ellipse cx="-10" cy="-2" rx="11" ry="5" fill="#0c0c10"/>
+                            <ellipse cx="14" cy="-2" rx="11" ry="5" fill="#0c0c10"/>
+                            <rect x="-22" y="-160" width="44" height="72" rx="14" fill="#3b3b4a"/>
+                            <rect x="-4" y="-160" width="8" height="40" rx="3" style="fill:var(--accent)"/>
+                            <rect x="-5" y="-172" width="10" height="14" fill="#8d5a3b"/>
+                            <path d="M-22 -150 L-28 -118 L-26 -90" fill="none" stroke="#3b3b4a" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+                            <circle cx="-26" cy="-86" r="6" fill="#8d5a3b"/>
+                            <g transform="translate(22 -150)">
+                                <g class="wave">
+                                    <path d="M0 0 L22 -18 L26 -52" fill="none" stroke="#3b3b4a" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M26 -58 L21 -74 M26 -58 L33 -74" stroke="#8d5a3b" stroke-width="4" stroke-linecap="round"/>
+                                    <circle cx="26" cy="-56" r="6" fill="#8d5a3b"/>
+                                </g>
+                            </g>
+                            <circle cx="0" cy="-182" r="20" fill="#8d5a3b"/>
+                            <path d="M-21 -184 Q-24 -208 0 -207 Q24 -208 21 -184 Q12 -194 0 -193 Q-12 -194 -21 -184 Z" fill="#101014"/>
+                            <circle cx="-7" cy="-181" r="2" fill="#17171c"/>
+                            <circle cx="7" cy="-181" r="2" fill="#17171c"/>
+                            <path d="M-7 -173 Q0 -166 7 -173" fill="none" stroke="#17171c" stroke-width="2" stroke-linecap="round"/>
+                        </g>
+                    </g>
+
+                    <!-- Model 3: melompat -->
+                    <g transform="translate(430 365)">
+                        <g class="jump">
+                            <path d="M-8 -95 L-10 -4" stroke="#23232d" stroke-width="15" stroke-linecap="round"/>
+                            <path d="M10 -95 L12 -4" stroke="#23232d" stroke-width="15" stroke-linecap="round"/>
+                            <ellipse cx="-10" cy="-2" rx="11" ry="5" fill="#0c0c10"/>
+                            <ellipse cx="14" cy="-2" rx="11" ry="5" fill="#0c0c10"/>
+                            <rect x="-22" y="-160" width="44" height="72" rx="14" fill="#ef6f6c"/>
+                            <rect x="-5" y="-172" width="10" height="14" fill="#f0c3a0"/>
+                            <path d="M-22 -150 L-42 -178 L-46 -206" fill="none" stroke="#ef6f6c" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M22 -150 L42 -178 L46 -206" fill="none" stroke="#ef6f6c" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+                            <circle cx="-46" cy="-210" r="6" fill="#f0c3a0"/>
+                            <circle cx="46" cy="-210" r="6" fill="#f0c3a0"/>
+                            <circle cx="0" cy="-210" r="10" fill="#2b1a12"/>
+                            <circle cx="0" cy="-182" r="20" fill="#f0c3a0"/>
+                            <path d="M-21 -184 Q-22 -206 0 -205 Q22 -206 21 -184 Q9 -196 -3 -193 Q-13 -191 -21 -184 Z" fill="#2b1a12"/>
+                            <circle cx="-7" cy="-181" r="2" fill="#17171c"/>
+                            <circle cx="7" cy="-181" r="2" fill="#17171c"/>
+                            <path d="M-8 -175 Q0 -164 8 -175 Z" fill="#fff" stroke="#17171c" stroke-width="1.5" stroke-linejoin="round"/>
+                        </g>
+                    </g>
+                </svg>
+            </div>
+        </section>
+
+        <section class="spacer"></section>
+    </main>
+
+    <!-- Pemilih tema -->
+    <div class="theme-picker">
+        <div class="theme-panel" id="theme-panel">
+            <p>Pilih tema</p>
+            <div class="swatches">
+                <button class="swatch" data-theme="green"  aria-label="Neon Hijau"></button>
+                <button class="swatch" data-theme="blue"   aria-label="Samudra Biru"></button>
+                <button class="swatch" data-theme="purple" aria-label="Ungu Galaksi"></button>
+                <button class="swatch" data-theme="orange" aria-label="Sunset Oranye"></button>
+                <button class="swatch" data-theme="pink"   aria-label="Pink Neon"></button>
+                <button class="swatch" data-theme="light"  aria-label="Mode Terang"></button>
+                <button class="swatch" data-theme="custom" aria-label="Kustom"></button>
+            </div>
+            <span class="theme-name" id="theme-name">Neon Hijau</span>
+
+            <div class="custom-box">
+                <div class="custom-row">
+                    <label for="custom-color">Warna aksen</label>
+                    <input type="color" id="custom-color" class="color-input" value="#00d4ff">
+                </div>
+                <div class="base-toggle">
+                    <button class="base-btn selected" data-base="dark">Gelap</button>
+                    <button class="base-btn" data-base="light">Terang</button>
+                </div>
+            </div>
+        </div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Ubah tema">
+            <i class="ri-palette-line"></i>
+        </button>
+    </div>
+
+    <script src="Script.js"></script>
+</body>
+</html>
