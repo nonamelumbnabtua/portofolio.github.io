@@ -19,14 +19,11 @@
         <a href="index.html">Fe.Skopagraphi</a>
 
         <ul class="nav-links" id="nav-links">
-            <li><a href="#" class="active">Home</a></li>
+            <li><a href="#home" class="active">Home</a></li>
+            <li><a href="#about">About</a></li>
             <li><a href="#">Feature</a></li>
-            <li><a href="#">About</a></li>
             <li><a href="#">Contact</a></li>
-            <li class="nav-login"><a href="#">Login</a></li>
         </ul>
-
-        <a href="#" class="btn-login">Login</a>
 
         <button class="menu-toggle" id="menu-toggle" aria-label="Buka menu" aria-expanded="false" aria-controls="nav-links">
             <i class="ri-menu-line"></i>
@@ -34,7 +31,7 @@
     </nav>
 
     <main>
-        <section class="hero">
+        <section class="hero" id="home">
             <div class="hero-text">
                 <span class="hero-badge">Portofolio Fotografi</span>
                 <h1>Menangkap <span>Momen</span> Lewat Lensa</h1>
@@ -206,6 +203,27 @@
                         </g>
                     </g>
                 </svg>
+            </div>
+        </section>
+
+        <!-- Bagian About dengan Foto Asli & Fitur Selengkapnya -->
+        <section class="about-section" id="about">
+            <div class="about-container glass-card">
+                <div class="about-photo-wrapper">
+                    <div class="about-photo-frame">
+                        <img src="img/Photo about me.jpeg" alt="Tentang Saya" class="about-real-img">
+                    </div>
+                </div>
+                <div class="about-text-content">
+                    <span class="hero-badge">Tentang Saya</span>
+                    <h2>ABOUT Fe.Skopagraphi</h2>
+                    <p>Halo! Saya adalah seorang kreator visual, fotografer, serta pengembang yang memiliki ketertarikan mendalam pada dunia teknologi, analisis data, dan seni estetika visual. Berbekal pengalaman dalam mengeksplorasi berbagai proyek kreatif maupun akademik, saya selalu berupaya menyatukan ketelitian logika dengan keindahan artistik di setiap karya yang dihasilkan.</p>
+                    <p class="about-more-text">Selain fokus di dunia fotografi jalanan dan potret ekspresif, saya juga aktif mendalami pemrograman, pemrosesan media digital, serta perancangan sistem berbasis web. Perjalanan ini memotivasi saya untuk terus belajar, berinovasi, dan mengabadikan setiap momen bermakna menjadi sebuah cerita visual yang berkesan bagi siapa saja yang melihatnya.</p>
+                    
+                    <button class="btn-read-more" id="read-more-btn">
+                        <span>Lihat Selengkapnya</span> <i class="ri-arrow-down-s-line" id="read-more-icon"></i>
+                    </button>
+                </div>
             </div>
         </section>
 
