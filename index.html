@@ -8,7 +8,20 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="ring" id="ring"><span id="ringTxt">Alarm!</span><button onclick="stopRing()">Matikan</button></div>
+
+<!-- Pop up alarm -->
+<div class="modal" id="modal">
+  <div class="box">
+    <div class="icon">⏰</div>
+    <div class="mt" id="mTime">00:00</div>
+    <div class="ml" id="mLabel">Alarm</div>
+    <div class="row">
+      <button class="btn" onclick="stopRing()">Matikan</button>
+      <button class="btn ghost" onclick="snooze()">Tunda 5 menit</button>
+    </div>
+  </div>
+</div>
+
 <div class="wrap">
 <h1>Jam <span>Digital</span></h1>
 <div class="tabs">
@@ -28,13 +41,47 @@
 <div class="row" style="margin-top:0">
 <input type="time" id="aTime" value="07:00">
 <input type="text" id="aLabel" placeholder="Label (opsional)" maxlength="30">
-<button class="btn" onclick="addAlarm()">Tambah</button>
 </div>
+
+<div class="song-box">
+  <label class="btn ghost sm filebtn">🎵 Pilih lagu
+    <input type="file" id="aFile" accept="audio/*" hidden>
+  </label>
+  <div class="l" id="aFileName">Belum ada lagu (akan memakai bunyi bip)</div>
+  <audio id="aPrev" controls hidden></audio>
+  <div class="seg">
+    <span>Mulai</span>
+    <input type="text" id="aStart" placeholder="0:00">
+    <button class="btn ghost sm" onclick="setFromPlayer('aStart')">Ambil posisi</button>
+  </div>
+  <div class="seg">
+    <span>Selesai</span>
+    <input type="text" id="aEnd" placeholder="opsional">
+    <button class="btn ghost sm" onclick="setFromPlayer('aEnd')">Ambil posisi</button>
+  </div>
+  <div class="l">Putar lagu di atas, jeda di bagian yang kamu mau, lalu tekan "Ambil posisi". Bagian Mulai–Selesai akan diulang sampai alarm dimatikan.</div>
+</div>
+
+<div class="row"><button class="btn" onclick="addAlarm()">Tambah alarm</button></div>
 <div id="aList" style="margin-top:12px"></div>
 </section>
 
 <section class="panel" id="world">
-<div class="row" style="margin-top:0">
+<div class="globe-container" id="globeContainer">
+  <canvas id="globeCanvas"></canvas>
+  <!-- Kotak Info Detail saat Pin Globe Diklik -->
+  <div class="globe-popup" id="globePopup" style="display:none;">
+    <div class="popup-title" id="popupCityName">Kota</div>
+    <div class="popup-time" id="popupCityTime">00:00:00</div>
+    <div class="popup-sub" id="popupCityDate">Tanggal</div>
+    <div class="row" style="margin-top:8px">
+      <button class="btn sm" id="popupAddBtn">Tambah ke Jam Dunia</button>
+      <button class="btn ghost sm" onclick="closeGlobePopup()">Tutup</button>
+    </div>
+  </div>
+  <div class="globe-hint">🌐 Seret bola dunia untuk memutar, klik titik kota untuk melihat jam & animasi berputar</div>
+</div>
+<div class="row" style="margin-top:10px">
 <select id="wSel"></select>
 <button class="btn" onclick="addZone()">Tambah</button>
 </div>

@@ -32,6 +32,18 @@ input,select{background:var(--bg);color:var(--text);border:1px solid var(--line)
 .btn:hover{transform:scale(1.05)}
 .btn.ghost{background:none;border:1px solid var(--line);color:var(--text)}
 
+/* Globe Container & Popup */
+.globe-container{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--bg);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px;overflow:hidden}
+#globeCanvas{cursor:grab;border-radius:50%;touch-action:none}
+#globeCanvas:active{cursor:grabbing}
+
+.globe-popup{position:absolute;bottom:12px;left:12px;right:12px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:0 10px 25px rgba(0,0,0,0.3);animation:pop .25s ease;z-index:10}
+.popup-title{font-weight:700;font-size:1.1rem}
+.popup-time{font-size:1.6rem;font-weight:700;font-variant-numeric:tabular-nums;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;margin:2px 0}
+.popup-sub{font-size:0.85rem;color:var(--muted)}
+
+.globe-hint{font-size:0.8rem;color:var(--muted);text-align:center;margin-top:8px}
+
 /* Daftar alarm & jam dunia */
 .item{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 4px;border-bottom:1px solid var(--line)}
 .item:last-child{border-bottom:0}
@@ -44,16 +56,29 @@ input,select{background:var(--bg);color:var(--text);border:1px solid var(--line)
 /* Toggle */
 .sw{position:relative;width:46px;height:26px;flex:none}
 .sw input{opacity:0;width:100%;height:100%;position:absolute;cursor:pointer;z-index:1}
-.sw i{position:absolute;inset:0;background:var(--line);border-radius:99px;transition:.25s}
+.sw i{position:absolute;inset:0;background:var(--line);border-radius:9px;transition:.25s}
 .sw i::after{content:'';position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:.25s}
 .sw input:checked+i{background:var(--main)}
 .sw input:checked+i::after{transform:translateX(20px)}
 
-/* Banner alarm */
-.ring{position:fixed;left:0;right:0;top:0;padding:16px;background:var(--grad);color:#fff;text-align:center;z-index:50;display:none;font-size:1.2rem;font-weight:600}
-.ring.on{display:block;animation:p 1s infinite}
-.ring button{margin-left:12px;border:0;border-radius:99px;padding:8px 18px;font-weight:600;cursor:pointer}
-@keyframes p{50%{opacity:.75}}
-
 /* Lap stopwatch */
 .lap{display:flex;justify-content:space-between;padding:8px 4px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+
+/* Pilih lagu */
+.song-box{margin-top:14px;padding:14px;border:1px dashed var(--line);border-radius:14px;text-align:center}
+.song-box .l{margin-top:8px;color:var(--muted);font-size:.85rem}
+.song-box audio{width:100%;margin-top:12px}
+.filebtn{display:inline-block}
+.seg{display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap;margin-top:10px}
+.seg input{width:90px;text-align:center}
+.btn.sm{padding:6px 14px;font-size:.85rem}
+
+/* Pop up alarm */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;z-index:100;padding:16px}
+.modal.on{display:flex}
+.box{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:32px 28px;text-align:center;max-width:360px;width:100%;animation:pop .35s ease}
+.box .icon{font-size:3.5rem;display:inline-block;animation:shake 1s infinite}
+.box .mt{font-size:3.2rem;font-weight:700;font-variant-numeric:tabular-nums;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.box .ml{color:var(--muted);margin-top:4px}
+@keyframes pop{from{transform:scale(.85);opacity:0}}
+@keyframes shake{0%,100%{transform:rotate(0)}25%{transform:rotate(-12deg)}75%{transform:rotate(12deg)}}
