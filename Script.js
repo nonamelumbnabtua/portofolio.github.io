@@ -1,260 +1,172 @@
-/* ===== Menu mobile & Navigasi Aktif ===== */
-const menuToggle = document.getElementById('menu-toggle');
-const navLinks = document.getElementById('nav-links');
-const menuIcon = menuToggle.querySelector('i');
-const navItems = navLinks.querySelectorAll('a');
+const $ = s => document.querySelector(s);
+const pad = n => String(n).padStart(2, '0');
+const esc = s => s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
-function setMenu(isOpen) {
-    navLinks.classList.toggle('active', isOpen);
-    menuToggle.setAttribute('aria-expanded', isOpen);
-    menuToggle.setAttribute('aria-label', isOpen ? 'Tutup menu' : 'Buka menu');
-    menuIcon.className = isOpen ? 'ri-close-line' : 'ri-menu-line';
-}
-
-menuToggle.addEventListener('click', () => {
-    setMenu(!navLinks.classList.contains('active'));
-});
-
-// Efek klik menu: pindah kelas active ke menu yang dituju
-navItems.forEach(link => {
-    link.addEventListener('click', (e) => {
-        navItems.forEach(item => item.classList.remove('active'));
-        link.classList.add('active');
-        setMenu(false);
-    });
-});
-
-document.addEventListener('click', (e) => {
-    if (!e.target.closest('.glass-nav')) setMenu(false);
-});
-
-window.addEventListener('resize', () => {
-    if (window.innerWidth > 900) setMenu(false);
-});
-
-/* ===== Pindah Menu Otomatis Saat Halaman Di-scroll ===== */
-const sections = document.querySelectorAll('section[id]');
-
-window.addEventListener('scroll', () => {
-    let scrollPos = window.scrollY + 250;
-
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.offsetHeight;
-        const sectionId = section.getAttribute('id');
-
-        if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
-            navItems.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${sectionId}`) {
-                    link.classList.add('active');
-                }
-            });
-        }
-    });
-});
-
-/* ===== Efek Navbar Scroll (Blur & Solid Transparan Halus) ===== */
-const glassNav = document.querySelector('.glass-nav');
-let isScrolling = false;
-
-function handleNavScroll() {
-    if (window.scrollY > 30) {
-        glassNav.classList.add('scrolled');
-    } else {
-        glassNav.classList.remove('scrolled');
-    }
-    isScrolling = false;
-}
-
-window.addEventListener('scroll', () => {
-    if (!isScrolling) {
-        window.requestAnimationFrame(handleNavScroll);
-        isScrolling = true;
-    }
-});
-
-handleNavScroll();
-
-/* ===== Progress bar scroll ===== */
-const progressBar = document.getElementById('progress-bar');
-
-function updateProgress() {
-    const doc = document.documentElement;
-    const max = doc.scrollHeight - doc.clientHeight;
-    const percent = max > 0 ? (doc.scrollTop / max) * 100 : 0;
-    progressBar.style.width = percent + '%';
-}
-
-window.addEventListener('scroll', updateProgress);
-window.addEventListener('resize', updateProgress);
-updateProgress();
-
-/* ===== Fitur "Lihat Selengkapnya" di About ===== */
-const readMoreBtn = document.getElementById('read-more-btn');
-const aboutMoreText = document.querySelector('.about-more-text');
-
-if (readMoreBtn) {
-    readMoreBtn.addEventListener('click', () => {
-        const isShow = aboutMoreText.classList.toggle('show');
-        readMoreBtn.classList.toggle('active', isShow);
-        
-        const spanText = readMoreBtn.querySelector('span');
-        if (isShow) {
-            spanText.textContent = 'Sembunyikan';
-        } else {
-            spanText.textContent = 'Lihat Selengkapnya';
-        }
-    });
-}
-
-/* ===== Ganti Tema & Simpan ke LocalStorage ===== */
-const themeToggle = document.getElementById('theme-toggle');
-const themePanel = document.getElementById('theme-panel');
-const themeName = document.getElementById('theme-name');
-const swatches = document.querySelectorAll('.swatch');
-
-const THEME_NAMES = {
-    green: 'Neon Hijau',
-    blue: 'Samudra Biru',
-    purple: 'Ungu Galaksi',
-    orange: 'Sunset Oranye',
-    pink: 'Pink Neon',
-    light: 'Mode Terang',
-    custom: 'Kustom'
+// Penyimpanan di browser (localStorage)
+const store = {
+  get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
 };
 
-const customColor = document.getElementById('custom-color');
-const baseBtns = document.querySelectorAll('.base-btn');
-const rootStyle = document.documentElement.style;
-const CUSTOM_VARS = ['--accent-rgb', '--on-accent', '--bg', '--panel-solid'];
-
-let customState = { color: '#00d4ff', base: 'dark' };
-
-function hexToRgb(hex) {
-    const n = parseInt(hex.slice(1), 16);
-    return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
-}
-
-function rgbToHsl(r, g, b) {
-    r /= 255; g /= 255; b /= 255;
-    const max = Math.max(r, g, b), min = Math.min(r, g, b);
-    const l = (max + min) / 2;
-    let h = 0, s = 0;
-    if (max !== min) {
-        const d = max - min;
-        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-        if (max === r) h = (g - b) / d + (g < b ? 6 : 0);
-        else if (max === g) h = (b - r) / d + 2;
-        else h = (r - g) / d + 4;
-        h *= 60;
-    }
-    return [h, s, l];
-}
-
-function hslToRgb(h, s, l) {
-    const k = n => (n + h / 30) % 12;
-    const a = s * Math.min(l, 1 - l);
-    const f = n => l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
-    return [Math.round(f(0) * 255), Math.round(f(8) * 255), Math.round(f(4) * 255)];
-}
-
-function applyCustomVars() {
-    const isLight = customState.base === 'light';
-    const [r, g, b] = hexToRgb(customState.color);
-    let [h, s, l] = rgbToHsl(r, g, b);
-
-    l = isLight ? Math.min(l, 0.42) : Math.max(l, 0.55);
-    const [ar, ag, ab] = hslToRgb(h, s, l);
-    const lum = (0.2126 * ar + 0.7152 * ag + 0.0722 * ab) / 255;
-    const sat = s * 100;
-
-    rootStyle.setProperty('--accent-rgb', `${ar}, ${ag}, ${ab}`);
-    rootStyle.setProperty('--on-accent', lum > 0.5 ? '#0b0b0b' : '#ffffff');
-    rootStyle.setProperty('--bg', isLight
-        ? `hsl(${h}, ${Math.min(sat, 60)}%, 95%)`
-        : `hsl(${h}, ${Math.min(sat, 40)}%, 4%)`);
-    rootStyle.setProperty('--panel-solid', isLight
-        ? 'rgba(255, 255, 255, 0.88)'
-        : `hsla(${h}, ${Math.min(sat, 35)}%, 8%, 0.85)`);
-}
-
-function clearCustomVars() {
-    CUSTOM_VARS.forEach(v => rootStyle.removeProperty(v));
-}
-
-function applyTheme(name) {
-    if (!THEME_NAMES[name]) name = 'green';
-
-    const root = document.documentElement;
-    root.setAttribute('data-theme', name);
-
-    if (name === 'custom') {
-        root.setAttribute('data-base', customState.base);
-        applyCustomVars();
-        themeName.textContent = `Kustom · ${customState.color.toUpperCase()}`;
-    } else {
-        root.removeAttribute('data-base');
-        clearCustomVars();
-        themeName.textContent = THEME_NAMES[name];
-    }
-
-    customColor.value = customState.color;
-    baseBtns.forEach(b => b.classList.toggle('selected', b.dataset.base === customState.base));
-    swatches.forEach(s => s.classList.toggle('selected', s.dataset.theme === name));
-
-    // Menyimpan tema ke localStorage agar tetap tersimpan saat halaman ditutup/di-refresh
-    try {
-        localStorage.setItem('selectedTheme', name);
-        localStorage.setItem('customThemeState', JSON.stringify(customState));
-    } catch (e) {
-        console.error('Gagal menyimpan tema:', e);
-    }
-}
-
-themeToggle.addEventListener('click', () => {
-    themePanel.classList.toggle('open');
+/* ---------- Tab ---------- */
+document.querySelectorAll('.tab').forEach(b => b.onclick = () => {
+  document.querySelectorAll('.tab,.panel').forEach(e => e.classList.remove('active'));
+  b.classList.add('active');
+  $('#' + b.dataset.p).classList.add('active');
 });
 
-document.addEventListener('click', (e) => {
-    if (!e.target.closest('.theme-picker')) themePanel.classList.remove('open');
-});
+/* ---------- Jam real time ---------- */
+$('#cZone').textContent = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
-swatches.forEach(s => {
-    s.addEventListener('click', () => applyTheme(s.dataset.theme));
-});
+function tickClock() {
+  const d = new Date();
+  $('#cTime').textContent = `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+  $('#cDate').textContent = d.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+}
 
-customColor.addEventListener('input', () => {
-    customState.color = customColor.value;
-    applyTheme('custom');
-});
+/* ---------- Alarm ---------- */
+let alarms = store.get('alarms', []);
+let lastFired = '', audio = null, beepTimer = null;
 
-baseBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-        customState.base = btn.dataset.base;
-        applyTheme('custom');
-    });
-});
+function renderAlarms() {
+  const el = $('#aList');
+  if (!alarms.length) { el.innerHTML = '<div class="empty">Belum ada alarm.</div>'; return; }
+  el.innerHTML = alarms.map(a => `
+    <div class="item">
+      <div><div class="t">${a.time}</div><div class="l">${esc(a.label || 'Alarm')}</div></div>
+      <div class="row" style="margin:0">
+        <label class="sw"><input type="checkbox" ${a.on ? 'checked' : ''} onchange="toggleAlarm(${a.id}, this.checked)"><i></i></label>
+        <button class="x" onclick="delAlarm(${a.id})" aria-label="Hapus">✕</button>
+      </div>
+    </div>`).join('');
+}
 
-// Memuat tema terakhir yang disimpan di localStorage saat halaman pertama kali dibuka
-window.addEventListener('DOMContentLoaded', () => {
-    try {
-        const savedTheme = localStorage.getItem('selectedTheme');
-        const savedCustomState = localStorage.getItem('customThemeState');
+function addAlarm() {
+  const t = $('#aTime').value;
+  if (!t) return;
+  alarms.push({ id: Date.now(), time: t, label: $('#aLabel').value.trim(), on: true });
+  alarms.sort((a, b) => a.time.localeCompare(b.time));
+  $('#aLabel').value = '';
+  saveAlarms();
+}
+function toggleAlarm(id, on) { alarms.find(a => a.id === id).on = on; saveAlarms(); }
+function delAlarm(id) { alarms = alarms.filter(a => a.id !== id); saveAlarms(); }
+function saveAlarms() { store.set('alarms', alarms); renderAlarms(); }
 
-        if (savedCustomState) {
-            const parsed = JSON.parse(savedCustomState);
-            if (parsed && parsed.color) {
-                customState = parsed;
-            }
-        }
+function checkAlarms() {
+  const d = new Date();
+  const hm = `${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  const key = hm + d.toDateString();
+  if (lastFired === key) return;
+  const hit = alarms.find(a => a.on && a.time === hm);
+  if (hit) { lastFired = key; ring(hit); }
+}
 
-        if (savedTheme) {
-            applyTheme(savedTheme);
-        } else {
-            applyTheme('green'); // Tema default
-        }
-    } catch (e) {
-        applyTheme('green');
-    }
-});
+function beep() {
+  try {
+    audio = audio || new (window.AudioContext || window.webkitAudioContext)();
+    const o = audio.createOscillator(), g = audio.createGain();
+    o.type = 'square';
+    o.frequency.value = 880;
+    g.gain.value = 0.15;
+    o.connect(g); g.connect(audio.destination);
+    o.start(); o.stop(audio.currentTime + 0.25);
+  } catch (e) {}
+}
+
+function ring(a) {
+  $('#ringTxt').textContent = '⏰ ' + a.time + ' — ' + (a.label || 'Alarm');
+  $('#ring').classList.add('on');
+  clearInterval(beepTimer);
+  beep();
+  beepTimer = setInterval(beep, 600);
+  setTimeout(stopRing, 60000); // berhenti otomatis setelah 1 menit
+}
+function stopRing() { $('#ring').classList.remove('on'); clearInterval(beepTimer); }
+
+// Browser baru mengizinkan suara setelah ada klik pertama
+document.addEventListener('click', () => {
+  try { audio = audio || new (window.AudioContext || window.webkitAudioContext)(); audio.resume(); } catch (e) {}
+}, { once: true });
+
+/* ---------- Jam dunia ---------- */
+const ZONES = ['Asia/Jakarta','Asia/Makassar','Asia/Jayapura','Asia/Singapore','Asia/Tokyo','Asia/Seoul','Asia/Dubai','Asia/Kolkata','Europe/London','Europe/Paris','Europe/Moscow','Africa/Cairo','America/New_York','America/Chicago','America/Los_Angeles','America/Sao_Paulo','Australia/Sydney','Pacific/Auckland'];
+let myZones = store.get('zones', ['Asia/Tokyo', 'Europe/London', 'America/New_York']);
+$('#wSel').innerHTML = ZONES.map(z => `<option>${z}</option>`).join('');
+
+function addZone() {
+  const z = $('#wSel').value;
+  if (!myZones.includes(z)) { myZones.push(z); store.set('zones', myZones); renderWorld(); }
+}
+function delZone(z) { myZones = myZones.filter(x => x !== z); store.set('zones', myZones); renderWorld(); }
+
+function renderWorld() {
+  const el = $('#wList');
+  if (!myZones.length) { el.innerHTML = '<div class="empty">Tambahkan kota/zona waktu.</div>'; return; }
+  el.innerHTML = myZones.map(z => `
+    <div class="item">
+      <div><div style="font-size:1.1rem">${z.split('/')[1].replace(/_/g, ' ')}</div><div class="l" data-d="${z}"></div></div>
+      <div class="row" style="margin:0">
+        <div class="t" data-t="${z}">--:--:--</div>
+        <button class="x" onclick="delZone('${z}')" aria-label="Hapus">✕</button>
+      </div>
+    </div>`).join('');
+  tickWorld();
+}
+
+function tickWorld() {
+  const now = new Date();
+  const local = new Date(now.toLocaleString('en-US'));
+  myZones.forEach(z => {
+    const t = document.querySelector(`[data-t="${z}"]`);
+    const d = document.querySelector(`[data-d="${z}"]`);
+    if (!t) return;
+    t.textContent = now.toLocaleTimeString('en-GB', { timeZone: z, hour12: false });
+    const diff = Math.round((new Date(now.toLocaleString('en-US', { timeZone: z })) - local) / 18e5) / 2;
+    d.textContent = now.toLocaleDateString('id-ID', { timeZone: z, weekday: 'short', day: 'numeric', month: 'short' })
+      + ' · ' + (diff === 0 ? 'Sama dengan lokal' : (diff > 0 ? '+' : '') + diff + ' jam');
+  });
+}
+
+/* ---------- Stopwatch ---------- */
+let swRun = false, swStart = 0, swAcc = 0, swRaf = 0, laps = [];
+const fmt = ms => {
+  const c = Math.floor(ms / 10) % 100, s = Math.floor(ms / 1000) % 60, m = Math.floor(ms / 60000);
+  return `${pad(m)}:${pad(s)}.${pad(c)}`;
+};
+const swNow = () => swAcc + (swRun ? performance.now() - swStart : 0);
+
+function swLoop() {
+  $('#sTime').textContent = fmt(swNow());
+  if (swRun) swRaf = requestAnimationFrame(swLoop);
+}
+function swToggle() {
+  if (swRun) {
+    swAcc += performance.now() - swStart;
+    swRun = false;
+    $('#sGo').textContent = 'Lanjut';
+  } else {
+    swStart = performance.now();
+    swRun = true;
+    $('#sGo').textContent = 'Jeda';
+    swLoop();
+  }
+}
+function swLap() {
+  if (!swNow()) return;
+  laps.unshift(swNow());
+  $('#laps').innerHTML = laps.map((l, i) => `<div class="lap"><span>Lap ${laps.length - i}</span><span>${fmt(l)}</span></div>`).join('');
+}
+function swReset() {
+  swRun = false; swAcc = 0; laps = [];
+  cancelAnimationFrame(swRaf);
+  $('#sTime').textContent = '00:00.00';
+  $('#sGo').textContent = 'Mulai';
+  $('#laps').innerHTML = '';
+}
+
+/* ---------- Mulai ---------- */
+renderAlarms();
+renderWorld();
+tickClock();
+setInterval(() => { tickClock(); tickWorld(); checkAlarms(); }, 250);
